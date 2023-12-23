@@ -32,4 +32,4 @@ if __name__ == "__main__":
                 is_algo_checkbox = gradio.Checkbox(label="algorithm")
                 submit_btn = gradio.Button("submit")
             submit_btn.click(fn=get_svg_image, inputs=latex_input_box, outputs=output_image_box)
-    demo.launch()
+    demo.launch(server_port=8001)
