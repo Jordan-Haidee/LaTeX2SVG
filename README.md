@@ -57,3 +57,11 @@ save the svg code to file, you can get the svg image:
 ![svg](./example.svg)
 
 Besides, if you request from a browser, and set query param `download=true`, the svg image will be downloaded automatically.
+
+### UI
+the project provides a simple UI built by [Gradio](https://www.gradio.app/)
+```bash
+pip install gradio
+python ui.py
+```
+Gradio UI will start at 8001 port.
