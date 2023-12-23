@@ -28,8 +28,10 @@ if __name__ == "__main__":
         with gradio.Row():
             output_image_box = gradio.Image(width=500, height=500, type="filepath")
             with gradio.Column():
-                latex_input_box = gradio.Textbox(lines=16, label="LaTeX", placeholder="Please input LaTeX equation code here")
+                latex_input_box = gradio.Textbox(
+                    lines=16, label="LaTeX", placeholder="Please input LaTeX equation code here"
+                )
                 is_algo_checkbox = gradio.Checkbox(label="Pseudocode")
                 submit_btn = gradio.Button("submit")
             submit_btn.click(fn=get_svg_image, inputs=latex_input_box, outputs=output_image_box)
-    demo.launch(server_port=8001)
+    demo.launch(server_name="0.0.0.0", server_port=8001)
