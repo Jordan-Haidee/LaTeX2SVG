@@ -25,16 +25,30 @@ def pipeline(latex_cmd: str, algo_name: str = None) -> str:
 if __name__ == "__main__":
     with gradio.Blocks(theme=gradio.themes.Soft(), title="LaTeX2SVG") as demo:
         with gradio.Row():
-            output_image_box = gradio.Image(width=500, height=500, type="filepath", label="Output SVG")
+            output_image_box = gradio.Image(
+                width=500,
+                height=500,
+                type="filepath",
+                label="SVG Output",
+            )
             with gradio.Column():
                 latex_input_box = gradio.Textbox(
-                    lines=13, max_lines=13, label="LaTeX", placeholder="Please input LaTeX code here ..."
+                    lines=14,
+                    max_lines=14,
+                    label="LaTeX",
+                    placeholder="Please input LaTeX code here ...",
+                    show_copy_button=True,
                 )
                 with gradio.Row():
                     algo_name_box = gradio.Textbox(
                         show_label=False,
                         placeholder="Algorithm name of pseudocode ...\nblank means it's a normal LaTeX math equation",
+                        show_copy_button=True,
                     )
                 submit_btn = gradio.Button("Submit")
-            submit_btn.click(fn=pipeline, inputs=[latex_input_box, algo_name_box], outputs=output_image_box)
+            submit_btn.click(
+                fn=pipeline,
+                inputs=[latex_input_box, algo_name_box],
+                outputs=output_image_box,
+            )
     demo.launch(server_name="0.0.0.0", server_port=8001)
