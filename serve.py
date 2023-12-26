@@ -45,7 +45,7 @@ def pdf2svg(input_file: str, output_file: str):
 
 
 def latex2pdf(input_file: str, output_file: str) -> bool:
-    cmd = ["xelatex", "-halt-on-error", f"-output-directory={output_file}", str(input_file)]
+    cmd = ["xelatex", "-halt-on-error", "-output-directory", str(output_file), str(input_file)]
     try:
         subprocess.run(cmd, check=True, capture_output=True, text=True)
     except subprocess.CalledProcessError as e:
