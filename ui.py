@@ -36,7 +36,7 @@ if __name__ == "__main__":
                     lines=14,
                     max_lines=14,
                     label="LaTeX",
-                    placeholder="Please input LaTeX code here ...",
+                    placeholder="Input LaTeX code here ...",
                     show_copy_button=True,
                 )
                 with gradio.Row():
