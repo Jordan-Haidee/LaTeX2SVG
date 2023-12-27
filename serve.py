@@ -6,10 +6,16 @@ from typing import Literal
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
+from jinja2 import Environment, FileSystemLoader
 from latex2mathml import converter
 from pydantic import BaseModel
 
 app = FastAPI()
+template_env = Environment(
+    variable_start_string=r"{{{",
+    variable_end_string=r"}}}",
+    loader=FileSystemLoader(Path(__file__).parent / "templates"),
+)
 
 
 class TaskData(BaseModel):
@@ -65,13 +71,13 @@ def latex2svg(task_data: TaskData) -> str:
     task_dir = Path(tempfile.gettempdir()) / task_id
     task_dir.mkdir()
     # convert pipeline
-    template_path = Path(__file__).parent / "templates/{}.tex".format(task_data.type)
-    with open(template_path, "r") as f:
-        latex_template = f.read()
     if task_data.type == "simple":
-        latex_cmd = latex_template % task_data.latex_cmd
+        latex_cmd = template_env.get_template("simple.jinja2").render(latex_math_equation_code=task_data.latex_cmd)
     else:
-        latex_cmd = latex_template % (task_data.algo_name, task_data.latex_cmd)
+        latex_cmd = template_env.get_template("simple_with_algo.jinja2").render(
+            algo_name=task_data.algo_name,
+            algo_code=task_data.latex_cmd,
+        )
     tex_path = task_dir / "{}.tex".format(task_id)
     pdf_path = tex_path.with_suffix(".pdf")
     with open(tex_path, "w") as f:
