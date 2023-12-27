@@ -27,20 +27,27 @@ sudo apt-get install texlive-full
 sudo apt-get install texlive-xetex
 sudo apt-get install pdf2svg
 ```
-3. install `fastapi` for API access
+3. install `fastapi` for API access, `jinja2` for template matching
 
 ```bash
-pip install fastapi uvicorn latex2mathml
+pip install fastapi jinja2 uvicorn latex2mathml
 ```
 4. start server
 
 ```bash
 uvicorn serve:app --port 8000 --host 0.0.0.0
 ```
-5. now you can use via `HTTP GET` request via any client, for example, `curl`:
+5. now you can use via `HTTP POST` request via any client, for example, `curl`:
 
 ```bash
-curl 'http://127.0.0.1:8000/latex2svg/?latex_cmd=L_%7BQ%7D=%5Cfrac%7B1%7D%7B%7CB%7C%7D%5Csum_%7Bi=1%7D%5E%7B%7CB%7C%7D%5Cleft%28%20y_i-Q_%5Cphi%28s_i,a_i%29%20%5Cright%29%5E2&download=false'
+curl -X POST \
+  -H "Content-Type: application/json" \
+  --data '{
+    "latex_cmd": "L_{Q}=\\frac{1}{|B|}\\sum_{i=1}^{|B|}\\left( y_i-Q_\\phi(s_i,a_i) \\right)^2",
+    "type": "simple",
+    "download": "false"
+  }' \
+  http://127.0.0.1:8000/latex2svg/
 ```
 response:
 ```
