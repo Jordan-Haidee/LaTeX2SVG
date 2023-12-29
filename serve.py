@@ -26,7 +26,7 @@ class TaskData(BaseModel):
 
 
 def crop_pdf(input_file: str, output_file: str) -> bool:
-    cmd = ["pdfcrop", "--margins", "5 5 5 5", str(input_file), str(output_file)]
+    cmd = ["pdfcrop", str(input_file), str(output_file)]
     try:
         subprocess.run(cmd, check=True, capture_output=True, text=True)
     except subprocess.CalledProcessError as e:
