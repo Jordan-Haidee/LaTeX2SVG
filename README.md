@@ -52,7 +52,7 @@ pip install fastapi jinja2 uvicorn
 4. start server
 
 ```bash
-uvicorn serve:app --port 8000 --host 0.0.0.0
+uvicorn server:app --port 8000 --host 0.0.0.0
 ```
 5. install `Gradio` for WebUI access,  the project provides a simple UI built by [Gradio](https://www.gradio.app/)
 
